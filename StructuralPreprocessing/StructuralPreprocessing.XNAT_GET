@@ -173,11 +173,24 @@ main()
 	ls ${g_working_dir}/tmp
 
 	
-	log_Msg "Moving files"
-	mv ${g_working_dir}/tmp/* ${g_working_dir}
+	if [ ! -d ${g_working_dir}/tmp/${g_subject}_${g_classifier} ] ; then
 
-	log_Msg "Removing tmp dir"
-	rmdir ${g_working_dir}/tmp
+		log_Msg "Moving files"
+		mv ${g_working_dir}/tmp/* ${g_working_dir}
+	
+		log_Msg "Removing tmp dir"
+		rmdir ${g_working_dir}/tmp
+	
+	else
+
+		log_Msg "Moving files"
+		mv ${g_working_dir}/tmp/${g_subject}_${g_classifier}/* ${g_working_dir}/${g_subject}_${g_classifier}
+	
+		log_Msg "Removing tmp dir"
+		rmdir ${g_working_dir}/tmp/${g_subject}_${g_classifier}
+		rmdir ${g_working_dir}/tmp
+
+	fi
 
 	if [ "${g_use_prescan_normalized}" = "TRUE" ]; then
 		log_Msg "Setting up symlinks to enable use of prescan normalized scans"
